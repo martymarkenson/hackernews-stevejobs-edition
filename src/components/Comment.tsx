@@ -2,12 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Comment as CommentType } from '@/services/hackerNewsApi';
+import { Comment as CommentType, getItems } from '@/services/hackerNewsApi';
 import { formatRelativeTime } from '@/utils/helpers';
 
 interface CommentProps {
   comment: CommentType;
-  loadReplies: (kidIds: number[]) => Promise<CommentType[]>;
+  loadReplies?: (kidIds: number[]) => Promise<CommentType[]>;
 }
 
 export default function Comment({ comment, loadReplies }: CommentProps) {
@@ -15,7 +15,6 @@ export default function Comment({ comment, loadReplies }: CommentProps) {
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(true);
   const [repliesLoaded, setRepliesLoaded] = useState(false);
-  const [isToggleHovered, setIsToggleHovered] = useState(false);
 
   if (!comment || comment.dead || comment.deleted) {
     return null;
@@ -25,11 +24,21 @@ export default function Comment({ comment, loadReplies }: CommentProps) {
   const hasReplies = kids && kids.length > 0;
   const relativeTime = formatRelativeTime(time);
 
+  const defaultLoadReplies = async (kidIds: number[]): Promise<CommentType[]> => {
+    try {
+      const replies = await getItems<CommentType>(kidIds);
+      return replies.filter(reply => reply !== null);
+    } catch (error) {
+      console.error('Error loading replies:', error);
+      return [];
+    }
+  };
+
   const handleToggleReplies = async () => {
     if (hasReplies && !repliesLoaded) {
       setLoading(true);
       try {
-        const loadedReplies = await loadReplies(kids);
+        const loadedReplies = await (loadReplies || defaultLoadReplies)(kids);
         setReplies(loadedReplies);
         setRepliesLoaded(true);
       } catch (error) {
@@ -47,8 +56,6 @@ export default function Comment({ comment, loadReplies }: CommentProps) {
         <button 
           onClick={handleToggleReplies} 
           className="comment-toggle"
-          onMouseEnter={() => setIsToggleHovered(true)}
-          onMouseLeave={() => setIsToggleHovered(false)}
           aria-label={expanded ? "Collapse comment" : "Expand comment"}
         >
           {expanded ? '[-]' : '[+]'}
@@ -70,7 +77,7 @@ export default function Comment({ comment, loadReplies }: CommentProps) {
                 <Comment 
                   key={reply.id} 
                   comment={reply} 
-                  loadReplies={loadReplies}
+                  loadReplies={loadReplies || defaultLoadReplies}
                 />
               ))}
             </div>

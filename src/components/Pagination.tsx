@@ -1,26 +1,20 @@
 'use client';
 
-import Link from 'next/link';
+import React from 'react';
 
 interface PaginationProps {
   currentPage: number;
-  totalPages: number;
-  basePath?: string;
+  totalPages?: number;
 }
 
-export default function Pagination({
-  currentPage,
-  totalPages,
-  basePath = '/',
-}: PaginationProps) {
+export default function Pagination({ currentPage }: PaginationProps) {
   return (
     <div className="pagination">
-      <a href="#" className={currentPage === 1 ? 'active' : ''}>1</a>
-      <a href="#" className={currentPage === 2 ? 'active' : ''}>2</a>
-      <a href="#" className={currentPage === 3 ? 'active' : ''}>3</a>
-      <a href="#" className={currentPage === 4 ? 'active' : ''}>4</a>
-      <a href="#" className={currentPage === 5 ? 'active' : ''}>5</a>
-      <a href="#">More</a>
+      <a href={currentPage > 1 ? `?page=${currentPage - 1}` : '#'} className={currentPage === 1 ? 'disabled' : ''}>
+        &laquo; Previous
+      </a>
+      <a href="#" className="active">{currentPage}</a>
+      <a href={`?page=${currentPage + 1}`}>Next &raquo;</a>
     </div>
   );
 } 

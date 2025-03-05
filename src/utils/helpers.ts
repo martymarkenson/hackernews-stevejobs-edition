@@ -28,14 +28,14 @@ export function formatRelativeTime(timestamp: number): string {
 /**
  * Extract and format the hostname from a URL
  */
-export function getHostname(url: string | undefined): string {
-  if (!url) return '';
+export function getHostname(url: string | undefined): string | null {
+  if (!url) return null;
   
   try {
-    const hostname = new URL(url).hostname;
-    return hostname.startsWith('www.') ? hostname.slice(4) : hostname;
-  } catch (error) {
-    return '';
+    const parsedUrl = new URL(url);
+    return parsedUrl.hostname.replace(/^www\./, '');
+  } catch {
+    return null;
   }
 }
 

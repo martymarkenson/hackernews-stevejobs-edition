@@ -19,7 +19,7 @@ export default async function Home() {
     return (
       <main>
         <div className="posts">
-          {stories.map((story, index) => (
+          {stories.map((story) => (
             <StoryItem key={story.id} story={story} />
           ))}
         </div>
