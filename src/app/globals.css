@@ -8,6 +8,11 @@
     -webkit-font-smoothing: antialiased;
 }
 
+/* Interactive elements cursor */
+a, button, .upvote-arrow, .comment-toggle, .comment-load-replies, .pagination a {
+    cursor: pointer;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: #FFFFFF;
@@ -227,6 +232,7 @@ main {
 
 .post-title a:hover {
     color: #FF6600;
+    cursor: pointer;
 }
 
 .post-url {
@@ -256,6 +262,8 @@ main {
 
 .post-meta a:hover {
     color: #FF6600;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 /* Pagination */
@@ -274,7 +282,8 @@ main {
 }
 
 .pagination a:hover:not(.active) {
-    color: #FF6600;
+    background-color: #f5f5f5;
+    cursor: pointer;
 }
 
 .pagination a.active {
@@ -358,6 +367,7 @@ p {
 
 .comment-author:hover {
     color: #FF6600;
+    cursor: pointer;
 }
 
 .comment-time {
@@ -377,6 +387,7 @@ p {
 
 .comment-toggle:hover {
     color: #FF6600;
+    cursor: pointer;
 }
 
 .comment-text {
@@ -410,5 +421,15 @@ p {
 }
 
 .comment-load-replies:hover {
-    color: #FF6600;
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+/* Rank styling */
+.rank {
+    font-size: 14px;
+    color: #999;
+    margin-right: 8px;
+    min-width: 24px;
+    text-align: right;
 }

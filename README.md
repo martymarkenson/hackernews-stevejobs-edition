@@ -2,6 +2,10 @@
 
 This project is a reimagined version of Hacker News with a design inspired by Steve Jobs' minimalist aesthetic. The idea originated from a conversation with Paul Graham (YC founder) about how Steve Jobs might have approached the Hacker News design.
 
+## Live Demo
+
+Check out the live demo: [https://hackernews-stevejobs-edition.vercel.app/](https://hackernews-stevejobs-edition.vercel.app/)
+
 ## The Inspiration
 
 This repository exists because of [this conversation](https://x.com/martyamark/status/1897343263490912358) with Paul Graham:
