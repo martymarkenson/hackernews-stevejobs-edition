@@ -14,25 +14,24 @@ export const revalidate = 300;
 export default async function NewStoriesPage() {
   try {
     const storyIds = await getNewStories();
-    const stories = await getItems<Story>(storyIds, 30);
-    
+    const stories = await getItems<Story>(storyIds.slice(0, 30));
+
     return (
-      <div className="posts">
-        {stories.map((story, index) => (
-          <StoryItem key={story.id} story={story} rank={index + 1} />
-        ))}
-        
+      <main>
+        <div className="posts">
+          {stories.map((story) => (
+            <StoryItem key={story.id} story={story} />
+          ))}
+        </div>
         <Pagination currentPage={1} totalPages={5} />
-      </div>
+      </main>
     );
   } catch (error) {
-    console.error('Error fetching new stories:', error);
+    console.error('Failed to fetch new stories:', error);
     return (
-      <div className="text-center py-10">
-        <p className="text-red-500 mb-4">
-          Error loading stories. Please try again later.
-        </p>
-      </div>
+      <main>
+        <p>Failed to load stories. Please try again later.</p>
+      </main>
     );
   }
 } 
