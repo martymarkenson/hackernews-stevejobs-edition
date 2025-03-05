@@ -1,26 +1,421 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #FFFFFF;
+    color: #000000;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+}
+
+/* Header styling */
+header {
+    border-bottom: 1px solid #eaeaea;
+    background-color: white;
+}
+
+header::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #FF6600;
+    opacity: 0.7;
+}
+
+nav {
+    display: flex;
+    padding: 12px 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    margin-right: 24px;
+}
+
+.logo-icon {
+    background-color: #FF6600;
+    color: white;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.logo-link:hover .logo-icon {
+    transform: scale(1.05);
+    box-shadow: 0 0 8px rgba(255, 102, 0, 0.3);
+}
+
+.nav-links {
+    display: flex;
+    gap: 16px;
+}
+
+.nav-links a {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: #FF6600;
+}
+
+.nav-links a::after {
+    display: none;
+}
+
+.nav-links a:hover::after {
+    display: none;
+}
+
+.nav-links a.font-semibold {
+    color: #FF6600;
+}
+
+.nav-links a.font-semibold::after {
+    display: none;
+}
+
+.search {
+    margin-left: auto;
+}
+
+/* Search styling */
+.search-container {
+    position: relative;
+    width: 200px;
+    transition: all 0.3s ease;
+}
+
+.search-container.focused {
+    transform: scale(1.02);
+}
+
+.search-container input {
+    width: 100%;
+    padding: 8px 12px;
+    padding-right: 32px;
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.search-container input:hover {
+    border-color: #d0d0d0;
+}
+
+.search-container input:focus {
+    border-color: #FF6600;
+    box-shadow: 0 0 0 2px rgba(255, 102, 0, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    pointer-events: none;
+    transition: color 0.2s ease;
+}
+
+.search-container.focused .search-icon {
+    color: #FF6600;
+}
+
+/* Main Content */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px;
+    padding-left: 46px;
+}
+
+.posts {
+    margin-top: 8px;
+}
+
+.post {
+    display: flex;
+    padding: 8px 0;
+    align-items: flex-start;
+    border-bottom: 1px solid #f0f0f0;
+    width: 90%;
+}
+
+/* Upvote styling */
+.upvote {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 8px;
+    min-width: 30px;
+    margin-left: 0;
+}
+
+.upvote-arrow {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 10px solid #999;
+    background: transparent;
+    border-top: none;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.upvote-arrow:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+    border-bottom-color: #FF6600;
+}
+
+.upvote-count {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+    text-align: center;
+}
+
+.post-content {
+    flex: 1;
+}
+
+.post-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.post-title a {
+    color: #000;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.post-title a:hover {
+    color: #FF6600;
+}
+
+.post-url {
+    font-size: 12px;
+    color: #666;
+    font-weight: normal;
+}
+
+.post-meta {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.post-meta span {
+    color: #666;
+}
+
+.post-meta a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.post-meta a:hover {
+    color: #FF6600;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #000000;
+    padding: 0 6px;
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.pagination a:hover:not(.active) {
+    color: #FF6600;
+}
+
+.pagination a.active {
+    font-weight: 600;
+    color: #FF6600;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+        gap: 16px;
+    }
+    
+    .nav-links {
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .search {
+        width: 100%;
+        margin-left: 0;
+    }
+    
+    .search input {
+        width: 100%;
+    }
+}
+
+/* Add styles for HTML content from the API */
+.prose a {
+    color: #FF6600;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.prose a:hover {
+    opacity: 0.8;
+}
+
+.prose pre {
+    background-color: #f5f5f5;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    overflow-x: auto;
+}
+
+/* Fix for dangerouslySetInnerHTML content */
+p {
+    margin-bottom: 0.5rem;
+}
+
+/* Comment styling */
+.comment {
+    padding: 14px 0;
+    border-bottom: 1px solid #E5E5E5;
+    transition: background-color 0.2s ease;
+}
+
+.comment:hover {
+    background-color: rgba(245, 245, 245, 0.5);
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.comment-author {
+    color: #000000;
+    font-weight: 400;
+    text-decoration: none;
+    font-size: 12px;
+    transition: color 0.2s ease;
+}
+
+.comment-author:hover {
+    color: #FF6600;
+}
+
+.comment-time {
+    color: #666666;
+    font-size: 12px;
+}
+
+.comment-toggle {
+    color: #666666;
+    font-size: 12px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease;
+}
+
+.comment-toggle:hover {
+    color: #FF6600;
+}
+
+.comment-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #000000;
+    margin-bottom: 8px;
+}
+
+.comment-replies {
+    margin-left: 20px;
+    border-left: 1px solid #E5E5E5;
+    padding-left: 10px;
+}
+
+.comment-loading {
+    font-size: 12px;
+    color: #666666;
+    margin: 8px 0;
+}
+
+.comment-load-replies {
+    font-size: 12px;
+    color: #666666;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-bottom: 8px;
+    transition: color 0.2s ease;
+}
+
+.comment-load-replies:hover {
+    color: #FF6600;
 }
